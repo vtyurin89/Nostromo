@@ -37,6 +37,10 @@ def run_pc():
         clock.tick(settings.fps)
         time_event = threading.Event()
 
+        start_screen = settings.start_screen
+        screen1 = settings.screen1
+        screen2 = settings.screen2
+
         for event in pg.event.get():
             if event.type == pg.QUIT:
                 sys.exit()
@@ -48,32 +52,57 @@ def run_pc():
                     settings.screen1 = False
                     settings.screen2 = True
 
-        start_screen = settings.start_screen
-        screen1 = settings.screen1
-        screen2 = settings.screen2
-
         if start_screen:
             screen.fill(settings.bg_color_1)
             draw_menu('Press SPACE to continue')
 
         if screen1:
             screen.fill(settings.bg_color_2)
-            draw_nostromo('NOSTROMO', settings.screen1_font, (settings.width / 2, settings.height / 2 - settings.letter_size_open * 1.1))
-            draw_nostromo('180924609', settings.screen1_font, (settings.width / 2, settings.height / 2))
+            draw_nostromo('NOSTROMO', settings.screen1_font,
+                          (settings.width / 2, settings.height / 2 - settings.letter_size_open * 1.1))
+            draw_nostromo('180924609', settings.screen1_font,
+                          (settings.width / 2, settings.height / 2))
 
         if screen2:
             screen.fill(settings.bg_color_3)
-            draw_screen2('SHIP', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2))
-            draw_screen2('WEYLAND YUTANI', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 2))
-            draw_screen2('NOSTROMO 180246', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 3))
-            draw_screen2('FUNCTION', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 7))
-            draw_screen2('TANKER/REFINERY', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 8))
-            draw_screen2('CAPACITY', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 10))
-            draw_screen2('200 000 000 TONNES', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 11))
-            draw_screen2('GALACTIC POSITION', settings.screen2_font,  (settings.width * 0.7, settings.letter_size_screen2 * 13))
-            draw_screen2('????????????????', settings.screen2_font, (settings.width * 0.7, settings.letter_size_screen2 * 14))
+            #правые надписи
+            draw_screen2('SHIP', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2))
+            draw_screen2('WEYLAND YUTANI', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 2))
+            draw_screen2('NOSTROMO 180246', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 3))
+            draw_screen2('FUNCTION', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 7))
+            draw_screen2('TANKER/REFINERY', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 8))
+            draw_screen2('CAPACITY', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 10))
+            draw_screen2('200 000 000 TONNES', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 11))
+            draw_screen2('GALACTIC POSITION', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 13))
+            draw_screen2('2702Px883P', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 14))
+            draw_screen2('VELOCITY STATUS', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 16))
+            draw_screen2('58.09 801', settings.screen2_font,
+                         (settings.width * 0.7, settings.letter_size_screen2 * 17))
+            #верхние надписи
+            draw_screen2('COMPUTER         JER/12493.D', settings.screen2_font,
+                         (settings.width * 0.05, settings.letter_size_screen2))
+            draw_screen2('ACTUAL TIME:      3   JUN', settings.screen2_font,
+                         (settings.width * 0.05, settings.letter_size_screen2*3))
+            draw_screen2('FLIGHT TIME:      5   NOV', settings.screen2_font,
+                         (settings.width * 0.05, settings.letter_size_screen2 * 4))
+            #экран
+            pg.draw.rect(screen, settings.text_colour_screen_1,
+                         pg.Rect(settings.width * 0.05, settings.letter_size_screen2 * 6.7, settings.width * 0.6, settings.height * 0.53))
+
 
         pg.display.flip()
+
+
 
 if __name__ == '__main__':
     run_pc()
