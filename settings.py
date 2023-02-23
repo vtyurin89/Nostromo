@@ -28,3 +28,11 @@ class Settings:
         self.screen1 = False
         self.start_screen = True
         self.screen2 = False
+
+        #время и таймер
+        self.screen1_time = 0
+        self.screen2_time = 0
+
+        #указатель
+        self.pointer_width = self.width
+        self.pointer_height = 5
