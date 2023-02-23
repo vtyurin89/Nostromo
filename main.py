@@ -189,18 +189,15 @@ def run_pc():
                 draw_lil_screen(show_list[index][0], settings.screen2_font, show_list[index][1])
                 draw_pointer()
                 if time_05 < time_tick and len(lil_screen_list) > 0:
-                    time_05 = time_05 + 0.5
+                    time_05 = time_05 + 0.2
                     item = lil_screen_list.pop(-1)
                     show_list.append(item)
-                    pointer.left = show_list[index][1][0]
-                    pointer.bottom = show_list[index][1][1]
-                    draw_pointer()
-                    print(index)
+                    pointer.left = item[1][0]
+                    pointer.bottom = item[1][1] + settings.letter_size_screen2
 
-
+                    print(item)
+                draw_pointer()
             screen.blit(lil_screen, (settings.width * 0.07, settings.letter_size_screen2 * 7.5))
-
-
 
 
 
