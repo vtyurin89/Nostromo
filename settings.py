@@ -10,6 +10,7 @@ class Settings:
         self.bg_color_1 = (1, 45, 113)
         self.bg_color_2 = (123, 34, 49)
         self.bg_color_3 = (3, 18, 34)
+        self.bg_color_4 = (1, 47, 92)
         self.fps = 60
 
         #шрифт
@@ -25,13 +26,15 @@ class Settings:
         self.text_colour_screen_1 = (152, 216, 212)
 
         #логические переменные
-        self.screen1 = False
         self.start_screen = True
+        self.screen1 = False
         self.screen2 = False
+        self.screen3 = False
 
         #время и таймер
         self.screen1_time = 0
         self.screen2_time = 0
+        self.screen3_time = 0
 
         #указатель
         self.pointer_width = self.width
