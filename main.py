@@ -226,7 +226,7 @@ def run_pc():
             screen.blit(lil_screen, (settings.width * 0.07, settings.letter_size_screen2 * 7.5))
 
 
-        if play and current_time - screen1_time > 8500 and current_time - screen1_time < 10500:
+        if play and current_time - screen1_time > 9500 and current_time - screen1_time < 10500:
             time_05 = current_time / 1000
             screen.fill(settings.bg_color_3)
 
