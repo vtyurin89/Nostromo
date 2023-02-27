@@ -12,9 +12,8 @@ def run_pc():
     clock = pg.time.Clock()
 
     screen1_time = settings.screen1_time
-    screen2_time = settings.screen2_time
-    screen3_time = settings.screen3_time
     time_05 = 0
+
 
     #указатель
     pointer = pg.rect.Rect(0, 0, settings.pointer_width, settings.pointer_height)
@@ -139,9 +138,8 @@ def run_pc():
         clock.tick(settings.fps)
 
         start_screen = settings.start_screen
-        screen1 = settings.screen1
-        screen2 = settings.screen2
-        screen3 = settings.screen3
+        play = settings.play
+
 
         current_time = pg.time.get_ticks()
 
@@ -152,30 +150,27 @@ def run_pc():
             if event.type == pg.KEYDOWN:
                 if event.key == pg.K_SPACE and start_screen:
                     settings.start_screen = False
-                    settings.screen1 = True
+                    settings.play = True
                     screen1_time = pg.time.get_ticks()
-                if event.key == pg.K_SPACE and screen1:
-                    settings.screen1 = False
-                    settings.screen2 = True
-                    screen2_time = pg.time.get_ticks()
-                if  event.key == pg.K_SPACE and screen2:
-                    settings.screen2 = False
-                    settings.screen3 = True
-                    screen3_time = pg.time.get_ticks()
+
+                    pg.mixer.music.load('sound/Alien 1979 - Initial Sequence222222222222.mp3')
+                    pg.mixer.music.play()
+                    pg.mixer.music.set_volume(0.5)
+
 
 
         #print(f'Current time: {current_time}, Time_tick: {time_tick}')
-
 
         if start_screen:
             screen.fill(settings.bg_color_1)
             draw_menu('Press SPACE to continue')
 
 
-        if screen1:
+        if play:
             screen.fill((0, 13, 40))
 
-        if screen1 and current_time - screen1_time > 500:
+
+        if play and current_time - screen1_time > 500:
             screen.fill((0, 13, 40))
             pg.draw.rect(screen, (1, 152, 229),
                          pg.Rect(0, settings.height * 0.7, settings.width,
@@ -183,26 +178,27 @@ def run_pc():
             pg.draw.line(screen, (0, 13, 40), [0, settings.height * 0.9],[settings.width, settings.height * 0.8], 10)
 
 
-        if screen1 and current_time - screen1_time > 600:
+        if play and current_time - screen1_time > 600:
             screen.fill(settings.bg_color_2)
             pg.draw.rect(screen, (0, 13, 40),
                          pg.Rect(0, 0, settings.width,
                                  settings.height * 0.2))
-            draw_nostromo('NOSTROMO', settings.screen1_font,
-                          (settings.width / 2, settings.height / 2 - settings.letter_size_open * 1.3))
-            draw_nostromo('180924609', settings.screen1_font,
-                          (settings.width / 2, settings.height / 1.9))
+            logo = pg.image.load('images/Nostromo_logo.png')
+            logo = pg.transform.scale(logo, (settings.width * 0.8, settings.height * 0.6))
+            logo_rect = logo.get_rect()
+            screen_rect = screen.get_rect()
+            logo_rect.centerx = screen_rect.centerx
+            logo_rect.centery = screen_rect.centery - logo_rect.height * 0.25
+            screen.blit(logo, logo_rect)
 
 
-        if screen1 and current_time - screen1_time > 700:
+        if play and current_time - screen1_time > 700:
             screen.fill(settings.bg_color_2)
-            draw_nostromo('NOSTROMO', settings.screen1_font,
-                          (settings.width / 2, settings.height / 2 - settings.letter_size_open * 1.1))
-            draw_nostromo('180924609', settings.screen1_font,
-                          (settings.width / 2, settings.height / 2))
+            logo_rect.centery = screen_rect.centery - logo_rect.height * 0.2
+            screen.blit(logo, logo_rect)
 
 
-        if screen2 and current_time - screen2_time < 500:
+        if play and current_time - screen1_time > 5000 and current_time - screen1_time < 6000:
             screen2_interface()
             lil_screen = pg.Surface((settings.width * 0.56, settings.height * 0.45))
             lil_screen.fill(settings.bg_color_3)
@@ -210,9 +206,10 @@ def run_pc():
                 draw_lil_screen(show_list[j][0], settings.screen2_font, show_list[j][1])
             screen.blit(lil_screen, (settings.width * 0.07, settings.letter_size_screen2 * 7.5))
             draw_pointer()
-            time_05 = current_time / 1000
+            time_05 = 0
 
-        if screen2 and current_time - screen2_time > 1000:
+
+        if play and current_time - screen1_time > 6000:
             time_tick = pg.time.get_ticks()/1000
             screen2_interface()
             lil_screen = pg.Surface((settings.width * 0.56, settings.height * 0.45))
@@ -220,7 +217,7 @@ def run_pc():
             for index, value in enumerate(show_list):
                 draw_lil_screen(show_list[index][0], settings.screen2_font, show_list[index][1])
                 if time_05 < time_tick and len(lil_screen_list) > 0:
-                    time_05 = time_05 + 0.2
+                    time_05 = time_05 + 0.1
                     item = lil_screen_list.pop(-1)
                     show_list.append(item)
                     pointer.left = item[1][0]
@@ -229,11 +226,11 @@ def run_pc():
             screen.blit(lil_screen, (settings.width * 0.07, settings.letter_size_screen2 * 7.5))
 
 
-        if screen3 and current_time - screen3_time < 2000:
+        if play and current_time - screen1_time > 8500 and current_time - screen1_time < 10500:
             time_05 = current_time / 1000
             screen.fill(settings.bg_color_3)
 
-        if screen3 and current_time - screen3_time > 2000:
+        if play and current_time - screen1_time > 10500:
             text_box_rect1 = pg.Rect(20, 20, settings.width/5 - 20, settings.height - 40)
             text_box_rect2 = pg.Rect(20*2 + text_box_rect1.width*1, 20, text_box_rect1.width, settings.height - 40)
             text_box_rect3 = pg.Rect(20*3 + text_box_rect1.width*2, 20, text_box_rect1.width, settings.height - 40)
@@ -241,6 +238,7 @@ def run_pc():
             text_box_rect5 = pg.Rect(20*5 + text_box_rect1.width*4, 20, text_box_rect1.width, settings.height - 40)
             time_tick = pg.time.get_ticks() / 1000
             screen.fill(settings.bg_color_4)
+
 
             if time_05 < time_tick:
                 show_number = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
@@ -254,13 +252,54 @@ def run_pc():
                 show_num_list4.append(show_number4)
                 show_num_list5.append(show_number5)
 
-                time_05 = time_05 + 0.25
+                time_05 = time_05 + 0.1
 
             draw_scroll_text_box(screen, text_box_rect1, show_num_list1)
             draw_scroll_text_box(screen, text_box_rect2, show_num_list2)
             draw_scroll_text_box(screen, text_box_rect3, show_num_list3)
             draw_scroll_text_box(screen, text_box_rect4, show_num_list4)
             draw_scroll_text_box(screen, text_box_rect5, show_num_list5)
+
+
+        if play and current_time - screen1_time > 16500:
+            screen.fill(settings.bg_color_4)
+            time_05 = 0
+
+        if play and current_time - screen1_time > 18000:
+            text_box_rect1 = pg.Rect(20, 20, settings.width/5 - 20, settings.height - 40)
+            text_box_rect2 = pg.Rect(20*2 + text_box_rect1.width*1, 20, text_box_rect1.width, settings.height - 40)
+            text_box_rect3 = pg.Rect(20*3 + text_box_rect1.width*2, 20, text_box_rect1.width, settings.height - 40)
+            text_box_rect4 = pg.Rect(20*4 + text_box_rect1.width*3, 20, text_box_rect1.width, settings.height - 40)
+            text_box_rect5 = pg.Rect(20*5 + text_box_rect1.width*4, 20, text_box_rect1.width, settings.height - 40)
+            time_tick = pg.time.get_ticks() / 1000
+            screen.fill(settings.bg_color_4)
+
+
+            if time_05 < time_tick:
+                show_number = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
+                show_number2 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
+                show_number3 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
+                show_number4 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
+                show_number5 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
+                show_num_list1.append(show_number)
+                show_num_list2.append(show_number2)
+                show_num_list3.append(show_number3)
+                show_num_list4.append(show_number4)
+                show_num_list5.append(show_number5)
+
+                time_05 = time_05 + 0.3
+
+            draw_scroll_text_box(screen, text_box_rect1, show_num_list1)
+            draw_scroll_text_box(screen, text_box_rect2, show_num_list2)
+            draw_scroll_text_box(screen, text_box_rect3, show_num_list3)
+            draw_scroll_text_box(screen, text_box_rect4, show_num_list4)
+            draw_scroll_text_box(screen, text_box_rect5, show_num_list5)
+
+
+            if play and current_time - screen1_time > 21000:
+                screen.fill(settings.bg_color_4)
+                draw_menu('System is ready')
+
 
         pg.display.flip()
 

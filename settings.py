@@ -27,9 +27,8 @@ class Settings:
 
         #логические переменные
         self.start_screen = True
-        self.screen1 = False
-        self.screen2 = False
-        self.screen3 = False
+        self.play = False
+
 
         #время и таймер
         self.screen1_time = 0
