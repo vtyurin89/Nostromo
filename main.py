@@ -1,5 +1,4 @@
-import sys, math
-import threading
+import sys
 import pygame as pg
 from settings import Settings
 from random import randint, choice, uniform
@@ -124,8 +123,8 @@ def run_pc():
 
     def draw_scroll_text_box(surface, box_rect, show_num_list):
         surface.set_clip(box_rect)
-        text_y = box_rect.bottom - settings.screen2_font.get_height() - 10
-        for text_surf in show_num_list:
+        text_y = box_rect.bottom - settings.screen2_font.get_height() - 5
+        for text_surf in reversed(show_num_list[:]):
             if text_y <= box_rect.top:
                 show_num_list.remove(text_surf)
             else:
@@ -243,8 +242,7 @@ def run_pc():
             time_tick = pg.time.get_ticks() / 1000
             screen.fill(settings.bg_color_4)
 
-
-            if time_05 < time_tick and len(num_list) > 0:
+            if time_05 < time_tick:
                 show_number = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
                 show_number2 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
                 show_number3 = settings.screen2_font.render(choice(num_list), True, (settings.text_colour_screen_1))
@@ -255,7 +253,9 @@ def run_pc():
                 show_num_list3.append(show_number3)
                 show_num_list4.append(show_number4)
                 show_num_list5.append(show_number5)
-                time_05 = time_05 + 0.2
+
+                time_05 = time_05 + 0.25
+
             draw_scroll_text_box(screen, text_box_rect1, show_num_list1)
             draw_scroll_text_box(screen, text_box_rect2, show_num_list2)
             draw_scroll_text_box(screen, text_box_rect3, show_num_list3)
